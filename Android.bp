@@ -1,0 +1,51 @@
+//
+// Copyright (C) 2026 Gamehac_RA & Google DeepMind Antigravity
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+android_app {
+    name: "PerAppScaler",
+    srcs: [
+        "app/src/main/java/**/*.kt",
+    ],
+    resource_dirs: ["app/src/main/res"],
+    manifest: "app/src/main/AndroidManifest.xml",
+    platform_apis: true,
+    privileged: true,
+    certificate: "platform",
+
+    static_libs: [
+        "androidx.core_core-ktx",
+        "androidx.appcompat_appcompat",
+        "com.google.android.material_material",
+        "androidx.recyclerview_recyclerview",
+        "androidx.swiperefreshlayout_swiperefreshlayout",
+        "kotlinx-coroutines-android",
+    ],
+
+    optimize: {
+        enabled: false,
+    },
+
+    required: [
+        "privapp-permissions-com.gamehac.perappscaler.xml",
+    ],
+}
+
+prebuilt_etc {
+    name: "privapp-permissions-com.gamehac.perappscaler.xml",
+    sub_dir: "permissions",
+    src: "permissions/privapp-permissions-com.gamehac.perappscaler.xml",
+    filename_from_src: true,
+}

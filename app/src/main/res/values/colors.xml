@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1E88E5</color>
+    <color name="primary_dark">#1565C0</color>
+    <color name="primary_container">#D1E4FF</color>
+    <color name="on_primary_container">#001D36</color>
+    <color name="secondary">#00897B</color>
+    <color name="secondary_container">#CCE8E3</color>
+    <color name="on_secondary_container">#00201C</color>
+    
+    <color name="background_light">#F8F9FA</color>
+    <color name="surface_light">#FFFFFF</color>
+    <color name="surface_variant_light">#EEF2F6</color>
+    <color name="text_primary_light">#1A1C1E</color>
+    <color name="text_secondary_light">#74777F</color>
+
+    <color name="background_dark">#111315</color>
+    <color name="surface_dark">#1A1C1E</color>
+    <color name="surface_variant_dark">#282A2D</color>
+    <color name="text_primary_dark">#E2E2E6</color>
+    <color name="text_secondary_dark">#8E9099</color>
+
+    <color name="badge_scaled_bg">#FFE082</color>
+    <color name="badge_scaled_text">#5D4037</color>
+    <color name="badge_game_bg">#E1BEE7</color>
+    <color name="badge_game_text">#4A148C</color>
+    <color name="badge_native_bg">#E0E0E0</color>
+    <color name="badge_native_text">#424242</color>
+
+    <color name="color_accent">#00C853</color>
+    <color name="color_danger">#E53935</color>
+</resources>
