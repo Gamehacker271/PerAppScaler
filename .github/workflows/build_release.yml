@@ -46,45 +46,43 @@ jobs:
           echo "Found APK: $APK_PATH"
           mkdir -p magisk_module/system/priv-app/PerAppScaler
           cp "$APK_PATH" magisk_module/system/priv-app/PerAppScaler/PerAppScaler.apk
-          cp "$APK_PATH" PerAppScaler-v1.0.0.apk
+          cp "$APK_PATH" PerAppScaler-v1.0.1.apk
           
           cd magisk_module
-          zip -r9 ../PerAppScaler-v1.0.0-MagiskModule.zip ./*
+          zip -r9 ../PerAppScaler-v1.0.1-MagiskModule.zip ./*
           cd ..
-          ls -lh PerAppScaler-v1.0.0.apk PerAppScaler-v1.0.0-MagiskModule.zip
+          ls -lh PerAppScaler-v1.0.1.apk PerAppScaler-v1.0.1-MagiskModule.zip
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: PerAppScaler-Release-Package
           path: |
-            PerAppScaler-v1.0.0.apk
-            PerAppScaler-v1.0.0-MagiskModule.zip
+            PerAppScaler-v1.0.1.apk
+            PerAppScaler-v1.0.1-MagiskModule.zip
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: v1.0.0
-          name: "PerAppScaler v1.0.0"
+          tag_name: v1.0.1
+          name: "PerAppScaler v1.0.1"
           draft: false
           prerelease: false
           body: |
-            ## PerAppScaler v1.0.0
+            ## PerAppScaler v1.0.1
             
             Open-source per-application resolution scaling and FPS tuning tool for Android 12 through Android 17+.
             
             ### Included in this Release:
-            - **`PerAppScaler-v1.0.0.apk`**: Standalone signed APK.
-            - **`PerAppScaler-v1.0.0-MagiskModule.zip`**: Magisk / KernelSU / APatch flashable module providing native privileged system app placement (`/system/priv-app/`) with `MANAGE_GAME_MODE` permission whitelist.
+            - **`PerAppScaler-v1.0.1.apk`**: Standalone signed APK.
+            - **`PerAppScaler-v1.0.1-MagiskModule.zip`**: Magisk / KernelSU / APatch flashable module providing native privileged system app placement (`/system/priv-app/`) with `MANAGE_GAME_MODE` permission whitelist.
             
-            ### Features:
-            - **Zero root needed at runtime** when installed as `priv-app`.
-            - Hardware scaling via SurfaceFlinger & Qualcomm/MediaTek DPU.
-            - Multi-language support: English, Spanish, Portuguese, Indonesian, Vietnamese, Russian, Simplified Chinese, Traditional Chinese, Arabic (RTL).
-            - Custom resolution scale (30% to 100%) and target FPS limits (30, 45, 60, 90, 120, uncapped).
+            ### Changes in v1.0.1:
+            - Automatically force-stops the target application upon applying or resetting downscale, so changes take effect immediately on next launch.
+            - Enhanced multi-shell fallback for rooted environments (`su`, `/system/bin/su`, `sh`).
           files: |
-            PerAppScaler-v1.0.0.apk
-            PerAppScaler-v1.0.0-MagiskModule.zip
+            PerAppScaler-v1.0.1.apk
+            PerAppScaler-v1.0.1-MagiskModule.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

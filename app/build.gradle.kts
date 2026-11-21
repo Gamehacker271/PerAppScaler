@@ -11,8 +11,8 @@ android {
         applicationId = "com.gamehac.perappscaler"
         minSdk = 31 // Android 12 (API 31)
         targetSdk = 35 // Android 15 (API 35), compatible through Android 17+
-        versionCode = 10000
-        versionName = "1.0.0"
+        versionCode = 10001
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

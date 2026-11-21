@@ -69,6 +69,7 @@ object GameInterventionEngine {
 
         if (success || scaleFactor < 0.99f || fpsOverride > 0) {
             saveConfig(context, packageName, scaleFactor, fpsOverride)
+            killApp(context, packageName)
             return true
         }
 
@@ -94,7 +95,18 @@ object GameInterventionEngine {
         }
 
         removeConfig(context, packageName)
+        killApp(context, packageName)
         return true
+    }
+
+    private fun killApp(context: Context, packageName: String) {
+        try {
+            val am = context.getSystemService(Context.ACTIVITY_SERVICE) as? android.app.ActivityManager
+            am?.killBackgroundProcesses(packageName)
+        } catch (e: Exception) {
+            Log.w(TAG, "killBackgroundProcesses non-fatal: ${e.message}")
+        }
+        executeShell("am force-stop $packageName")
     }
 
     /**
@@ -209,20 +221,17 @@ object GameInterventionEngine {
     }
 
     private fun executeShell(command: String): Boolean {
-        return try {
-            // First try direct sh execution (priv-app or system process)
-            val process = Runtime.getRuntime().exec(arrayOf("sh", "-c", command))
-            val exitCode = process.waitFor()
-            if (exitCode == 0) return true
-
-            // If sh failed with non-zero, try su if device is rooted
-            val suProcess = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-            val suExit = suProcess.waitFor()
-            suExit == 0
-        } catch (e: Exception) {
-            Log.w(TAG, "Shell execution failed: ${e.message}")
-            false
+        val shells = arrayOf("su", "/system/bin/su", "sh", "/system/bin/sh")
+        for (sh in shells) {
+            try {
+                val process = Runtime.getRuntime().exec(arrayOf(sh, "-c", command))
+                val exitCode = process.waitFor()
+                if (exitCode == 0) return true
+            } catch (e: Exception) {
+                // Ignore and try next shell
+            }
         }
+        return false
     }
 
     // --- Preferences & Persistence ---
