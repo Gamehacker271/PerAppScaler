@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        swipeRefresh.setOnRefreshLayoutListener {
+        swipeRefresh.setOnRefreshListener {
             loadInstalledApps()
         }
 
