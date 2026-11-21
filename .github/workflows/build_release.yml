@@ -44,6 +44,7 @@ jobs:
             exit 1
           fi
           echo "Found APK: $APK_PATH"
+          mkdir -p magisk_module/system/priv-app/PerAppScaler
           cp "$APK_PATH" magisk_module/system/priv-app/PerAppScaler/PerAppScaler.apk
           cp "$APK_PATH" PerAppScaler-v1.0.0.apk
           
