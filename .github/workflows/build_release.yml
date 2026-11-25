@@ -46,43 +46,49 @@ jobs:
           echo "Found APK: $APK_PATH"
           mkdir -p magisk_module/system/priv-app/PerAppScaler
           cp "$APK_PATH" magisk_module/system/priv-app/PerAppScaler/PerAppScaler.apk
-          cp "$APK_PATH" PerAppScaler-v1.0.1.apk
+          cp "$APK_PATH" PerAppScaler-v1.0.2.apk
+          cp permissions/privapp-permissions-com.gamehac.perappscaler.xml privapp-permissions-com.gamehac.perappscaler.xml
           
           cd magisk_module
-          zip -r9 ../PerAppScaler-v1.0.1-MagiskModule.zip ./*
+          zip -r9 ../PerAppScaler-v1.0.2-MagiskModule.zip ./*
           cd ..
-          ls -lh PerAppScaler-v1.0.1.apk PerAppScaler-v1.0.1-MagiskModule.zip
+          ls -lh PerAppScaler-v1.0.2.apk PerAppScaler-v1.0.2-MagiskModule.zip privapp-permissions-com.gamehac.perappscaler.xml
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: PerAppScaler-Release-Package
           path: |
-            PerAppScaler-v1.0.1.apk
-            PerAppScaler-v1.0.1-MagiskModule.zip
+            PerAppScaler-v1.0.2.apk
+            PerAppScaler-v1.0.2-MagiskModule.zip
+            privapp-permissions-com.gamehac.perappscaler.xml
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: v1.0.1
-          name: "PerAppScaler v1.0.1"
+          tag_name: v1.0.2
+          name: "PerAppScaler v1.0.2"
           draft: false
           prerelease: false
           body: |
-            ## PerAppScaler v1.0.1
+            ## PerAppScaler v1.0.2
             
             Open-source per-application resolution scaling and FPS tuning tool for Android 12 through Android 17+.
             
             ### Included in this Release:
-            - **`PerAppScaler-v1.0.1.apk`**: Standalone signed APK.
-            - **`PerAppScaler-v1.0.1-MagiskModule.zip`**: Magisk / KernelSU / APatch flashable module providing native privileged system app placement (`/system/priv-app/`) with `MANAGE_GAME_MODE` permission whitelist.
+            - **`PerAppScaler-v1.0.2.apk`**: Standalone signed APK.
+            - **`PerAppScaler-v1.0.2-MagiskModule.zip`**: Magisk / KernelSU / APatch flashable module providing native privileged system app placement (`/system/priv-app/`) with full priv-app permissions whitelist.
+            - **`privapp-permissions-com.gamehac.perappscaler.xml`**: Privileged permissions XML for ROM builders (`/product/etc/permissions/` or `/system/etc/permissions/`).
             
-            ### Changes in v1.0.1:
-            - Automatically force-stops the target application upon applying or resetting downscale, so changes take effect immediately on next launch.
-            - Enhanced multi-shell fallback for rooted environments (`su`, `/system/bin/su`, `sh`).
+            ### Changes in v1.0.2:
+            - Added `IPlatformCompat` (`DOWNSCALED` + `DOWNSCALE_XX`) support so resolution scaling works on **all regular apps** (not only `CATEGORY_GAME` apps), including Android 17 `user` builds via `putOverridesOnReleaseBuilds`.
+            - Added `FORCE_STOP_PACKAGES` privileged permission and `ActivityManager.forceStopPackage` reflection so target apps/games restart cleanly without needing root.
+            - Fixed silent-failure bug where failed interventions were still reported as applied.
+            - Added `am compat` root shell fallback alongside `cmd game`.
           files: |
-            PerAppScaler-v1.0.1.apk
-            PerAppScaler-v1.0.1-MagiskModule.zip
+            PerAppScaler-v1.0.2.apk
+            PerAppScaler-v1.0.2-MagiskModule.zip
+            privapp-permissions-com.gamehac.perappscaler.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

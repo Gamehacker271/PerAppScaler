@@ -3,5 +3,10 @@
     <privapp-permissions package="com.gamehac.perappscaler">
         <permission name="android.permission.MANAGE_GAME_MODE"/>
         <permission name="android.permission.INTERACT_ACROSS_USERS"/>
+        <permission name="android.permission.OVERRIDE_COMPAT_CHANGE_CONFIG"/>
+        <permission name="android.permission.OVERRIDE_COMPAT_CHANGE_CONFIG_ON_RELEASE_BUILD"/>
+        <permission name="android.permission.LOG_COMPAT_CHANGE"/>
+        <permission name="android.permission.READ_COMPAT_CHANGE_CONFIG"/>
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
     </privapp-permissions>
 </permissions>

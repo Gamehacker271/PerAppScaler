@@ -1,6 +1,6 @@
 id=per_app_scaler
 name=PerAppScaler (Priv-App)
-version=v1.0.1
-versionCode=10001
+version=v1.0.2
+versionCode=10002
 author=Gamehac_RA & Antigravity
-description=Per-app resolution downscaler & FPS tuner running with native privileged permissions (MANAGE_GAME_MODE). Zero root needed at runtime!
+description=Per-app resolution downscaler & FPS tuner for all apps and games (GameManager + PlatformCompat + Force-Stop). Zero root needed at runtime!
